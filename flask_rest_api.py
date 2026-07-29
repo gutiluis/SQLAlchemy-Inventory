@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# flask_inventory_api.py
+
+# file: flask_inventory_api.py
+# descr:
 
 # to check...
 # http://127.0.0.1:5000/products

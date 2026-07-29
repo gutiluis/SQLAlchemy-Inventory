@@ -1,4 +1,9 @@
-#!/bin/python
+#!/usr/bin/env python3
+
+# file: app.py
+# descr:
+
+
 from models import (Base, session,
                     Product, engine)
 from sqlite_CSV_backup import *

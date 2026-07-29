@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+
+# file: sqlite_CSV_backup.py
+# descr:
+
+
 from contextlib import ExitStack
 import csv
 import logging

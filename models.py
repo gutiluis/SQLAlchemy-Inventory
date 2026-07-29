@@ -1,4 +1,8 @@
-#!/bin/python
+#!/usr/bin/env python3
+
+# file: models.py
+# descr:
+
 from sqlalchemy import (create_engine, Column,
                         Integer, String, Date)
 from sqlalchemy.ext.declarative import declarative_base
@@ -24,4 +28,3 @@ class Product(Base):
 
     def __repr__(self):
         return f"Name: {self.product_name} Price: {self.product_price} Quantity: {self.product_quantity} Last_update: {self.date_updated}"
-

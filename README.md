@@ -1,10 +1,9 @@
-## How it works:
+> [!WARNING]
+> CURRENTLY UNDER DEVELOPMENT
 
-From within the terminal run:
-- python -m venv env
-- source env/bin/activate
-- pip install -r requirements.txt
-- python3 app.py
+# Inventory Store with SQLAlchemy
+
+---
 
 Console application that loads an existing store's inventory data from a CSV file into a SQLite database. 
 The application will allow a user to interact with the records stored in the database to view existing records, add new items, and backup/export the existing state of the database into a CSV file.
@@ -48,47 +47,67 @@ prompt the user to enter the product's name, quantity, and price. process the us
 Backup the database (Export new CSV) - Menu Option B
 function to handle making a backup of the database. The backup is written to a .csv file.
 
-# to run the flask rest api
-- python3 flask_rest_api.py
+---
 
------
+## How it works:
 
-####
+```
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+python3 app.py
+```
 
-## Features:
+### to run the flask rest api
+
+```
+python3 flask_rest_api.py
+```
+
+---
+
+## Features
 
 SQLAlchemy script to make a db file in SQLite with an instance of a model class. import a csv file
 the script will run backups of the database in SQLite format
 
 The second script is to build an API with Flask framework
 
------
+---
 
-#####
-
-## Technologies Used:
+## Tech-Stack
 
 - Python
 - SQLAlchemy
 - SQLite
-- CSV module
+- Flask
 
------
+---
 
-#####
-
-## Skills Learned:
+## Skills
 
 - Relational Databases
 - CSV
 - ORM
 
------
-
-###
+---
 
 Cloning repo:
 
 ```bash
 git clone https://github.com/gutiluis/Techdegree-project-4.git
 ```
+
+---
+
+## Contributing
+
+---
+
+## Community
+
+---
+
+## License
+
+[MIT LICENSE](LICENSE)
