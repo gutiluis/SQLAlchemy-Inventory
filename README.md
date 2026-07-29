@@ -92,19 +92,17 @@ The second script is to build an API with Flask framework
 
 ---
 
-Cloning repo:
-
-```bash
-git clone https://github.com/gutiluis/Techdegree-project-4.git
-```
-
----
-
 ## Contributing
+
+If you are interested in reporting/fixing issues and contributing directly to the code base, please see CONTRIBUTING.md for more information on what we're looking for and how to get started.
 
 ---
 
 ## Community
+
+Info on reporting bugs, getting help, finding third-party tools and sample apps, and more can be found on the Community page.
+
+
 
 ---
 
