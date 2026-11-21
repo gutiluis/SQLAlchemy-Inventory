@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 
 # file: models.py
-# descr:
+# descr: can make models csv or sqlite
 
-from sqlalchemy import (create_engine, Column,
-                        Integer, String, Date)
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
 
 
 engine = create_engine("sqlite:///inventory.db", echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
-
 
 
 class Product(Base):
@@ -24,7 +21,7 @@ class Product(Base):
     product_name = Column("Name", String)
     product_price = Column("Price", Integer)
     product_quantity = Column("Quantity", Integer)
-    date_updated = Column("Last_update", Date)
+    date_updated = Column("Last_update", DateTime)
 
     def __repr__(self):
         return f"Name: {self.product_name} Price: {self.product_price} Quantity: {self.product_quantity} Last_update: {self.date_updated}"

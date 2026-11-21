@@ -1,21 +1,58 @@
 #!/usr/bin/env python3
 
 # file: app.py
-# descr:
+# descr: enter manually or load data and administer inventory
 
 
-from models import (Base, session,
-                    Product, engine)
+from models import Base, session, Product, engine
 from sqlite_CSV_backup import *
-from datetime import datetime
+from datetime import datetime, date
 import csv
 import logging
 import time
+from pathlib import Path
+import pdb
 
 logging.basicConfig(level=logging.INFO)
-           
 
-logging.info("create a menu to make selections.")
+
+logging.info("initial setup")
+
+
+def initial_setup():
+    while True:
+        print("""
+        ## INVENTORY SETUP ##
+
+        1. Load Inventory from CSV
+        2. Start new inventory
+        3. Continue with existing inventory
+        """)
+
+        choice = input("Select an option: ").strip()
+        if choice == "1":
+            filename = input("CSV filename: ").strip()
+            if not Path(filename).is_file():
+                print("CSV file not found.")
+                continue
+            Base.metadata.create_all(engine)
+            add_csv_to_db(filename)
+            return "database"
+
+        elif choice == "2":
+            # can exit early when the filename already exists
+            if new_csv_inventory():
+                return "csv"
+
+        elif choice == "3":
+            Base.metadata.create_all(engine)
+            print("Using existing inventory.")
+            return "database"
+
+        else:
+            print("Invalid option.")
+
+
 def selections_menu():
     while True:
         print("""
@@ -30,9 +67,61 @@ def selections_menu():
         if user_interaction in ["v", "a", "b", "e"]:
             return user_interaction
         else:
-            input("Wrong selection. Return to the main menu by pressing enter. Then enter only v, a, b or e: ")
+            input(
+                "Wrong selection. Return to the main menu by pressing enter. Then enter only v, a, b or e: "
+            )
 
-logging.debug("app function has a clean_id wrapper/helper function")
+
+def new_csv_inventory():
+    filename = (
+        input("New inventory filename [new_inventory.csv]: ").strip()
+        or "new_inventory.csv"
+    )
+
+    if Path(filename).exists():
+        print("File already exists. Choose another filename.")
+        return False
+
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(
+            ["product_name", "product_price", "product_quantity", "date_updated"]
+        )
+    print(f"\nNew inventory created: {filename}")
+
+    while True:
+        add_product_to_csv(filename)
+        another = input("Add another product? (y/n): ").lower().strip()
+        if another != "y":
+            break
+    return True
+
+
+def add_product_to_csv(filename):
+    while True:
+        product_name = input("Product name: ").strip()
+
+        if product_name:
+            break
+        print("Enter a value.")
+
+    product_price = clean_price(input("Product price (Ex: 25.64): "))
+
+    product_quantity = clean_quantity(input("Product quantity: "))
+
+    with open(filename, "a", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(
+            [
+                product_name,
+                f"${product_price / 100:.2f}",
+                product_quantity,
+                date.today().strftime("%m/%d/%Y"),
+            ]
+        )
+    print(f"\nProduct '{product_name}' added successfully!\n")
+
+
 def clean_id(id_string, options):
     try:
         id = int(id_string)
@@ -43,7 +132,6 @@ def clean_id(id_string, options):
               \rEx: 1, 2, 3...
               \rPress Enter to return to the last menu... 
               \r**********************""")
-        logging.debug("the return will return None... affecting the while loop")
         return
     else:
         if id in options:
@@ -57,21 +145,19 @@ def clean_id(id_string, options):
             return
 
 
-logging.info("cleaning price column string data type from csv. remove $ and make integer.")
 def clean_price(price_string_csv):
     while True:
         try:
             replace_m = price_string_csv.replace("$", "").strip()
             price_float = float(replace_m)
             return int(price_float * 100)
-            logging.debug("runs when a user does not enter something")
         except ValueError:
             price_string_csv = input("""
               \n***** PRICE ERROR *****
               \rThe price should be a number without a currency symbol...
               \rEx: 12.99
               \rTry again: """)
-        
+
 
 def clean_quantity(quantity_string):
     while True:
@@ -86,8 +172,8 @@ def clean_quantity(quantity_string):
               \rTry again: """)
 
 
-logging.info("csv format: 2/3/2000. The parameter in the function can be anything.")
 def clean_date(date_string_csv):
+    """parse csv date strings"""
     while True:
         try:
             dt = datetime.strptime(date_string_csv, "%m/%d/%Y").date()
@@ -100,40 +186,38 @@ def clean_date(date_string_csv):
               \rTry again: """)
 
 
-logging.debug("6/6/2010")
-logging.debug("$2.91")
-logging.debug("product_name, product_price, product_quantity, date_updated")
-logging.info("""function that will add the products
-             \rlisted in the inventory.csv file to the db""")
-def add_csv_to_db():
-    with open("inventory.csv", newline="") as csvfile:
-        iter_gener = csv.DictReader(csvfile, delimiter=",")  
+def add_csv_to_db(filename):
+    """import products from any file"""
+    with open(filename, newline="") as csvfile:
+        iter_gener = csv.DictReader(csvfile, delimiter=",")
         for row in iter_gener:
-            logging.debug("""scalar value str() vs multiple values ORM""")
-            no_dup_product_in_db = session.query(Product).filter(Product.product_name==row["product_name"]).one_or_none()
-            if no_dup_product_in_db == None: # add product if no duplicate only
+            no_dup_product_in_db = (
+                session.query(Product)
+                .filter(Product.product_name == row["product_name"])
+                .one_or_none()
+            )
+
+            if no_dup_product_in_db is None:
                 name = row["product_name"]
                 price = clean_price(row["product_price"])
                 quantity = clean_quantity(row["product_quantity"])
                 date = clean_date(row["date_updated"])
                 new_product = Product(
-                    product_name=name, 
-                    product_price=price, 
-                    product_quantity=quantity, 
-                    date_updated=date
+                    product_name=name,
+                    product_price=price,
+                    product_quantity=quantity,
+                    date_updated=date,
                 )
                 session.add(new_product)
         session.commit()
 
 
-logging.info("app function")
 def app():
     app_running = True
     while app_running:
         user_interaction = selections_menu()
 
         if user_interaction == "v":
-            logging.debug("grab length of db and use as a range?")
             id_options = []
             for product in session.query(Product):
                 id_options.append(product.id)
@@ -142,49 +226,41 @@ def app():
                 id_choice = input(f"""
                       \nId Options: {id_options}...
                       \rProduct id: """)
-                logging.debug("clean_id() has 2 parameters too")
                 id_choice = clean_id(id_choice, id_options)
                 if type(id_choice) == int:
                     id_error = False
-            the_product = session.query(Product).filter(Product.id==id_choice).first()
-            logging.debug("""product price get back to an actual price and not the price and cents
-                          ex: 10.99 instead of 1,099""")
+            the_product = session.query(Product).filter(Product.id == id_choice).first()
             print(f"""
                   \nProduct name: {the_product.product_name}
                   \rProduct current price: ${the_product.product_price / 100}
                   \rProduct quantity: {the_product.product_quantity}
                   \rLast date updated: (YYYY-MM-DD): {the_product.date_updated}""")
             input("\nPress enter to return to the main menu()...")
-            
+
         elif user_interaction == "a":
-            logging.debug("clean_name wrapper function still undone")
+            # todo: add function
             while True:
                 product_name = input("Product name: ").strip()
-                logging.debug("""will evaluate to false if left empty...
-                              how to raise an exception instead of looping to handle it elsewhere """)
                 if product_name:
                     break
                 print("Enter a value...")
-                
-            product_price = clean_price(input("Product price (Ex: 25.64): "))
+            product_price = clean_price(input("Product price (Ex: 25.53): "))
             product_quantity = clean_quantity(input("Product quantity: "))
-            date_updated = clean_date(input("Date updated (Ex: 11/1/2018): "))
-            
-            logging.debug("create and add product session to db.")
+            date_updated = datetime.now()
+            breakpoint()
             new_product = Product(
                 product_name=product_name,
                 product_price=product_price,
                 product_quantity=product_quantity,
-                date_updated=date_updated
+                date_updated=date_updated,
             )
             session.add(new_product)
             session.commit()
-            print(f"\nProduct '{product_name}' added successfully!\n")
-            time.sleep(1)
-            
+            print(f"\nProduct '{product_name}' added successfully\n")
+            time.sleep(1.5)
+
         elif user_interaction == "b":
             make_csv_backup_from_sqlite("inventory.db", "backup_csv.csv")
-            logging.info("CSV db backup created...")
 
         else:
             print("\nGOODBYE")
@@ -192,6 +268,6 @@ def app():
 
 
 if __name__ == "__main__":
-    Base.metadata.create_all(engine)
-    add_csv_to_db()
-    app()
+    setup_mode = initial_setup()
+    if setup_mode == "database":
+        app()
