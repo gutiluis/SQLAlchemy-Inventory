@@ -173,7 +173,7 @@ def clean_quantity(quantity_string):
 
 
 def clean_date(date_string_csv):
-    """parse csv date strings"""
+    """parse csv date strings to load inventory"""
     while True:
         try:
             dt = datetime.strptime(date_string_csv, "%m/%d/%Y").date()
@@ -187,7 +187,7 @@ def clean_date(date_string_csv):
 
 
 def add_csv_to_db(filename):
-    """import products from any file"""
+    """load from any file preventing duplicity"""
     with open(filename, newline="") as csvfile:
         iter_gener = csv.DictReader(csvfile, delimiter=",")
         for row in iter_gener:
@@ -238,7 +238,6 @@ def app():
             input("\nPress enter to return to the main menu()...")
 
         elif user_interaction == "a":
-            # todo: add function
             while True:
                 product_name = input("Product name: ").strip()
                 if product_name:
@@ -247,7 +246,6 @@ def app():
             product_price = clean_price(input("Product price (Ex: 25.53): "))
             product_quantity = clean_quantity(input("Product quantity: "))
             date_updated = datetime.now()
-            breakpoint()
             new_product = Product(
                 product_name=product_name,
                 product_price=product_price,
