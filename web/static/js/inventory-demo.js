@@ -22,7 +22,7 @@ const initialProducts = [
         product_name: "Wireless Mouse",
         quantity: 20,
         price: 19.99,
-        updated_at: "2026-11-03 14:15:00 p.m.",
+        updated_at: "2026-11-03 2:15:00 p.m.",
     },
 ];
 
@@ -134,7 +134,15 @@ productForm.addEventListener("submit", (event) => {
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
-        updated_at: new Date().toLocaleString(),
+        updated_at: new Date().toLocaleString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+        }),
     };
     if (productId) {
         const index = products.findIndex((item) => item.id === productId);
