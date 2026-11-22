@@ -27,7 +27,7 @@ The application imports product data from a CSV file, stores records in a SQLite
 Install the dependencies:
 
 ```bash
-pip install sqlalchemy
+pip install -r requirements.txt
 ```
 
 Run the application:
