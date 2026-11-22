@@ -134,7 +134,7 @@ productForm.addEventListener("submit", (event) => {
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
-        updated_at: new Date().toISOString(),
+        updated_at: new Date().toLocaleString(),
     };
     if (productId) {
         const index = products.findIndex((item) => item.id === productId);
