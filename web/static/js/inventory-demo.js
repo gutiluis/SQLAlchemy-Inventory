@@ -127,16 +127,24 @@ productForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const products = getInventory();
+    const productId = Number(productIdInput.value);
 
     const product = {
-        id: getNextProductId(products),
+        id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
-        updated_at: new Date().toLocaleString(),
+        updated_at: new Date().toISOString(),
     };
-    products.push(product);
-
+    if (productId) {
+        const index = products.findIndex((item) => item.id === productId);
+        if (index === -1) {
+            return;
+        }
+        products[index] = product;
+    } else {
+        products.push(product);
+    }
     saveInventory(products);
     displayInventory();
     resetForm();
@@ -151,7 +159,7 @@ function editProduct(id) {
     if (!product) {
         return;
     }
-
+    // value is a property
     productIdInput.value = product.id;
     productNameInput.value = product.product_name;
     quantityInput.value = product.quantity;
