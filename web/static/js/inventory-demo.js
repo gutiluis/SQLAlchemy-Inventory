@@ -83,7 +83,7 @@ function calculateInventoryKPIs(products) {
     };
 }
 
-// kpi rendering function
+// kpi rendering function with cards in tailwindcss
 function displayInventoryKPIs(products) {
     const kpis = calculateInventoryKPIs(products);
     const metrics = [
@@ -110,7 +110,12 @@ function displayInventoryKPIs(products) {
         const heading = document.createElement("h3");
         const value = document.createElement("p");
 
+        card.className = "border border-green-400 bg-black p-4";
+
+        heading.className = "mb-2 text-sm text-green-200";
         heading.textContent = metric.label;
+
+        value.className = "text-2xl font-bold text-green-400";
         value.textContent = metric.value;
 
         card.append(heading, value);
