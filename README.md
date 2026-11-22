@@ -1,7 +1,4 @@
-> [!WARNING]
-> CURRENTLY UNDER DEVELOPMENT
-
-# Inventory Management Console
+# Inventory Management
 
 A Python console application for managing store inventory using SQLAlchemy ORM and SQLite.
 
