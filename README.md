@@ -1,6 +1,6 @@
 # Inventory Management
 
-A Python console application for managing store inventory using SQLAlchemy ORM and SQLite.
+A Python console application with a browser demo for managing store inventory using SQLAlchemy ORM and SQLite.
 
 ## Overview
 
