@@ -102,7 +102,7 @@ supplierForm.addEventListener("submit", (event) => {
     const suppliers = getSuppliers();
 
     const newSupplier = {
-        id: crypto.randomUUI(),
+        id: crypto.randomUUID(),
         name: supplierName.value.trim(),
         contactPerson: contactPerson.value.trim(),
     };
