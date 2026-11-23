@@ -97,7 +97,10 @@ function displayInventoryKPIs(products) {
         },
         {
             label: "Inventory Value",
-            value: `$${kpis.totalInventoryValue.toFixed(2)}`,
+            value: `$${kpis.totalInventoryValue.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            })}`,
         },
         {
             label: "Average Unit Cost",
