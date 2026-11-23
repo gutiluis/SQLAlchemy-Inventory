@@ -67,6 +67,16 @@ const updatedAtContainer = document.getElementById("updated-at-container");
 const updatedAt = document.querySelector("#updated-at");
 const inventoryKPIs = document.getElementById("inventory-kpis");
 const supplierIdInput = document.getElementById("supplier-id");
+const supplierForm = document.getElementById("supplier-form");
+const supplierNameInput = document.getElementById("supplier-name");
+const contactPersonInput = document.getElementById("contact-person");
+const supplierEmailInput = document.getElementById("supplier-email");
+const supplierPhoneInput = document.getElementById("supplier-phone");
+const supplierAddressInput = document.getElementById("supplier-address");
+const paymentTermsInput = document.getElementById("payment-terms");
+const supplierStatusInput = document.getElementById("supplier-status");
+const addSupplierButton = document.getElementById("add-supplier-button");
+const cancelSupplierButton = document.getElementById("cancel-supplier-button");
 const submitButton = document.querySelector("#submit-button");
 const cancelButton = document.querySelector("#cancel-button");
 const resetButton = document.querySelector("#reset-button");
@@ -86,6 +96,21 @@ function getSuppliers() {
 function saveSuppliers(suppliers) {
     localStorage.setItem(SUPPLIER_STORAGE_KEY, JSON.stringify(suppliers));
 }
+
+supplierForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const suppliers = getSuppliers();
+
+    const newSupplier = {
+        id: crypto.randomUUI(),
+        name: supplierName.value.trim(),
+        contactPerson: contactPerson.value.trim(),
+    };
+    suppliers.push(newSupplier);
+    saveSuppliers(suppliers);
+    supplierForm.reset();
+    displaySuppliers();
+});
 
 function displaySuppliers() {
     const suppliers = getSuppliers();
