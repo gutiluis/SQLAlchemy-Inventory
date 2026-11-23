@@ -47,7 +47,8 @@ const resetButton = document.querySelector("#reset-button");
 const inventoryTableBody = document.querySelector("#inventory-table-body");
 const inventoryCount = document.querySelector("#inventory-count");
 const emptyMessage = document.querySelector("#empty-message");
-
+const currentYear = document.getElementById("current-year");
+currentYear.textContent = new Date().getFullYear();
 // Initialize localStorage
 function initializeInventory() {
     const storedProducts = localStorage.getItem(STORAGE_KEY);
