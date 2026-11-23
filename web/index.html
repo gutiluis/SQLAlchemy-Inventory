@@ -27,11 +27,11 @@
                     <!-- KPI cards rendered by JS -->
                 </div>
                 <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <article>
+                    <article class="h-80">
                         <h3>Unit Cost by Product</h3>
                         <canvas id="unit-cost-chart"></canvas>
                     </article>
-                    <article>
+                    <article class="h-80">
                         <h3>Inventory Value by Product</h3>
                         <canvas id="inventory-value-chart"></canvas>
                     </article>
@@ -145,6 +145,9 @@
             </footer>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="{{ url_for('static', filename='business/inventory-management/js/inventory-demo.js') }}"></script>
+        <script
+            src="/static/business/inventory-management/js/inventory-demo.js"
+            defer
+        ></script>
     </body>
 </html>

@@ -135,20 +135,22 @@ function displayInventoryCharts(products) {
         (product) => product.quantity * product.unit_cost,
     );
     const chartOptions = {
+        indexAxis: "y",
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                labels: {
-                    color: "#4ade80",
-                },
+                display: false,
             },
         },
         scales: {
             x: {
-                ticks: { color: "#4ade80" },
+                beginAtZero: true,
+                ticks: {
+                    color: "#4ade80",
+                },
             },
             y: {
-                beginAtZero: true,
                 ticks: {
                     color: "#4ade80",
                 },
