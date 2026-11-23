@@ -150,6 +150,17 @@ function displaySuppliers() {
         });
 
         const actionsCell = document.createElement("td");
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.type = "button";
+        editButton.dataset.id = supplier.id;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.type = "button";
+        deleteButton.dataset.id = supplier.id;
+
+        actionsCell.append(editButton, deleteButton);
         row.appendChild(actionsCell);
 
         fragment.appendChild(row);
