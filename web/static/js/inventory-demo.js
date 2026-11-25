@@ -128,7 +128,7 @@ supplierForm.addEventListener("submit", (event) => {
         phone: supplierPhoneInput.value.trim(),
         address: supplierAddressInput.value.trim(),
         payment_terms: paymentTermsInput.value.trim(),
-        status: "Active",
+        status: supplierStatusInput.value,
     };
     if (supplierId) {
         const index = suppliers.findIndex((item) => item.id === supplierId);
