@@ -111,7 +111,7 @@ function displaySupplierOptions() {
         const option = document.createElement("option");
 
         option.value = supplier.id;
-        option.textContent = supplier.name;
+        option.textContent = supplier.supplier_name;
 
         productSupplierSelect.append(option);
     });
@@ -541,7 +541,7 @@ productForm.addEventListener("submit", (event) => {
     const product = {
         id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
-        supplier_id: Number(supplierIdInput.value),
+        supplier_id: Number(productSupplierSelect.value),
         quantity: Number(quantityInput.value),
         unit_cost: Number(unitCostInput.value),
         selling_price: Number(sellingPriceInput.value),

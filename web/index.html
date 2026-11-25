@@ -209,11 +209,16 @@
                 <form id="product-form">
                     <input type="hidden" id="product-id" readonly />
                     <div>
-                        <label for="product-supplier">Supplier</label>
+                        <label
+                            for="product-supplier"
+                            class="block mb-2 text-sm font-medium text-green-400"
+                            >Supplier</label
+                        >
                         <select
                             id="product-supplier"
-                            name="supplierId"
+                            name="supplier_id"
                             required
+                            class="w-full rounded-md border border-green-400 bg-black px-3 py-2 text-green-400 focus:border-green-200 focus:outline-none focus:ring-1 focus:ring-green-400"
                         >
                             <option value="">Select Supplier</option>
                         </select>
