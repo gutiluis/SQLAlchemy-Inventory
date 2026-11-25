@@ -167,8 +167,13 @@ function editSupplier(id) {
 }
 function calculateSupplierKPIs(suppliers) {
     const totalSuppliers = suppliers.length;
+    const activeSuppliers = suppliers.filter(
+        (supplier) => supplier.status === "Active",
+    ).length;
+
     return {
         totalSuppliers,
+        activeSuppliers,
     };
 }
 function displaySupplierKPIs(suppliers) {
@@ -189,7 +194,7 @@ function displaySupplierKPIs(suppliers) {
         heading.className = "mb-2 text-sm text-green-200";
         heading.textContent = metric.label;
 
-        value.className = "text-2xl fond-bold text-green-400";
+        value.className = "text-2xl font-bold text-green-400";
         value.textContent = metric.value;
         card.append(heading, value);
         supplierKPIs.append(card);
