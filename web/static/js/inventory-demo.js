@@ -82,6 +82,7 @@ const cancelSupplierButton = document.getElementById("cancel-supplier-button");
 const submitButton = document.querySelector("#submit-button");
 const cancelButton = document.querySelector("#cancel-button");
 const resetButton = document.querySelector("#reset-button");
+const resetSuppliersButton = document.querySelector("#reset-suppliers");
 const supplierTableBody = document.getElementById("supplier-table-body");
 const inventoryTableBody = document.querySelector("#inventory-table-body");
 const inventoryCount = document.querySelector("#inventory-count");
@@ -596,14 +597,11 @@ function deleteSupplier(supplierId) {
 // Reset form
 function resetForm() {
     productForm.reset();
-    supplierForm.reset();
     productIdInput.value = "";
-    supplierIdInput.value = "";
     updatedAtContainer.hidden = true;
     updatedAt.textContent = "";
 
     submitButton.textContent = "Add Product";
-    submitButton.textContent = "Add Supplier";
     cancelButton.hidden = true;
 }
 
@@ -613,9 +611,21 @@ cancelButton.addEventListener("click", resetForm);
 // Reset demo inventory
 resetButton.addEventListener("click", () => {
     saveInventory([]);
-    saveSuppliers([]);
     resetForm();
     displayInventory();
+});
+
+function resetSupplierForm() {
+    supplierForm.reset();
+    supplierIdInput.value = "";
+
+    submitButton.textContent = "Add Supplier";
+    cancelButton.hidden = true;
+}
+
+resetSuppliersButton.addEventListener("click", () => {
+    saveSuppliers([]);
+    resetSupplierForm();
     displaySuppliers();
 });
 
