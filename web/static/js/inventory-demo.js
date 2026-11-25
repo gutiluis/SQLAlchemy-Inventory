@@ -183,12 +183,17 @@ function displaySupplierKPIs(suppliers) {
             label: "Total Suppliers",
             value: kpis.totalSuppliers,
         },
+        {
+            label: "Active Suppliers",
+            value: kpis.activeSuppliers,
+        },
     ];
     supplierKPIs.replaceChildren();
     metrics.forEach((metric) => {
         const card = document.createElement("article");
         const heading = document.createElement("h3");
         const value = document.createElement("p");
+
         card.className = "border border-green-400 bg-black p-4";
 
         heading.className = "mb-2 text-sm text-green-200";
