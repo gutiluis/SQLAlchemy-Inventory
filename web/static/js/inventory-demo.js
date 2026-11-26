@@ -545,6 +545,7 @@ function displayInventory() {
         const remainingValues = [
             `$${Number(product.unit_cost).toFixed(2)}`,
             `$${Number(product.selling_price).toFixed(2)}`,
+            formattedDate,
         ];
 
         remainingValues.forEach((value) => {
