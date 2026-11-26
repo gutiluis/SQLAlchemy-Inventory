@@ -490,6 +490,24 @@ function formatDate(date) {
     });
 }
 
+const statusLabels = {
+    "in-stock": "In Stock",
+    "low-stock": "Low Stock",
+    "out-of-stock": "Out of Stock",
+};
+
+const statusClasses = {
+    "in-stock": "border-green-400 text-green-400 bg-green-400/10",
+    "low-stock": "border-yellow-400 text-yellow-400 bg-yellow-400/10",
+    "out-of-stock": "border-red-400 text-red-400 bg-red-400/10",
+};
+
+const statusDotClasses = {
+    "in-stock": "bg-green-400",
+    "low-stock": "bg-yellow-400",
+    "out-of-stock": "bg-red-400",
+};
+
 // Display html table inventory
 function displayInventory() {
     const products = getInventory();
@@ -524,20 +542,13 @@ function displayInventory() {
         const statusBadge = document.createElement("span");
         const status = getStockStatus(product);
 
-        const statusLabels = {
-            "in-stock": "In Stock",
-            "low-stock": "Low Stock",
-            "out-of-stock": "Out of Stock",
-        };
-
-        const statusClasses = {
-            "in-stock": "border-green-400 text-green-400 bg-green-400/10",
-            "low-stock": "border-yellow-400 text-yellow-400 bg-yellow-400/10",
-            "out-of-stock": "border-red-400 text-red-400 bg-red-400/10",
-        };
+        const statusDot = document.createElement("span");
+        statusDot.className = `h-2 w-2 shrink-0 rounded-full ${statusDotClasses[status]}`;
 
         statusBadge.textContent = statusLabels[status];
-        statusBadge.className = `inline-block rounded-md border px-2 py-1 text-xs font-medium ${statusClasses[status]}`;
+        statusBadge.className = `inline-flex w-max shrink-0 whitespace-nowrap items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[status]}`;
+
+        statusBadge.prepend(statusDot);
 
         statusCell.appendChild(statusBadge);
         row.appendChild(statusCell);
