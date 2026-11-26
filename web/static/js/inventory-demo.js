@@ -512,6 +512,7 @@ const statusDotClasses = {
 function displayInventory() {
     const products = getInventory();
     displayInventoryKPIs(products);
+    displayLowStockAlerts(products);
     displayInventoryCharts(products);
     inventoryTableBody.replaceChildren();
 
