@@ -57,6 +57,7 @@ const initialProducts = [
 ];
 
 // DOM elements
+const lowStockList = document.getElementById("low-stock-list");
 const reorderLevelInput = document.getElementById("reorder-level");
 const productForm = document.querySelector("#product-form");
 const productIdInput = document.querySelector("#product-id");
