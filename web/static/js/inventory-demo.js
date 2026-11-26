@@ -486,6 +486,7 @@ function displayInventory() {
         const formattedDate = formatDate(product.updated_at);
         const values = [
             product.id,
+            product.product_name,
             getSupplierName(product.supplier_id),
             product.quantity,
             `$${Number(product.unit_cost).toFixed(2)}`,
