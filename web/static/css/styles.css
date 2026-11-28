@@ -51,8 +51,7 @@ form {
     gap: 1rem;
 }
 
-input,
-button {
+input {
     width: 100%;
     min-height: 42px;
     padding: 0.7rem 0.9rem;
@@ -73,26 +72,6 @@ input:focus {
 
 input::placeholder {
     color: #86a68e;
-}
-
-button {
-    background: #14532d;
-    color: #bbf7d0;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-button:hover {
-    background: #166534;
-}
-
-button:focus-visible {
-    outline: 2px solid #4ade80;
-    outline-offset: 3px;
-}
-
-form button {
-    grid-column: 1 / -1;
 }
 
 #updated-at {
@@ -119,36 +98,4 @@ th {
 
 td {
     background: #080808;
-}
-
-td button {
-    width: auto;
-    margin: 0.2rem;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 1rem 0.5rem;
-    }
-
-    section {
-        padding: 1rem;
-    }
-
-    form {
-        grid-template-columns: 1fr;
-    }
-
-    table {
-        font-size: 0.8rem;
-    }
-
-    th,
-    td {
-        padding: 0.5rem;
-    }
-
-    td button {
-        width: 100%;
-    }
 }

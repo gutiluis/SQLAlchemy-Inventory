@@ -317,6 +317,7 @@ function displaySuppliers(suppliers = getSuppliers()) {
         const editButton = document.createElement("button");
         editButton.type = "button";
         editButton.textContent = "Edit";
+        editButton.className = "btn-secondary";
         editButton.addEventListener("click", () => {
             editSupplier(supplier.id);
         });
@@ -324,6 +325,7 @@ function displaySuppliers(suppliers = getSuppliers()) {
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
+        deleteButton.className = "btn-danger";
         deleteButton.addEventListener("click", () => {
             deleteSupplier(supplier.id);
         });
@@ -632,13 +634,13 @@ function displayInventory() {
                 "text-left whitespace-normal break-words",
                 "text-right whitespace-nowrap tabular-nums",
             ];
-            cell.className = cellClasses[index];
+            cell.className = `p-2 ${cellClasses[index]}`;
             cell.textContent = value;
             row.appendChild(cell);
         });
 
         const statusCell = document.createElement("td");
-        statusCell.className = "text-center whitespace-nowrap";
+        statusCell.className = "p-2 text-center whitespace-nowrap";
 
         const statusBadge = document.createElement("span");
         const status = getStockStatus(product);
@@ -676,6 +678,7 @@ function displayInventory() {
         const editButton = document.createElement("button");
         editButton.type = "button";
         editButton.textContent = "Edit";
+        editButton.className = "btn-secondary";
         editButton.addEventListener("click", () => {
             editProduct(product.id);
         });
@@ -683,6 +686,7 @@ function displayInventory() {
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
+        deleteButton.className = "btn-danger";
         deleteButton.addEventListener("click", () => {
             deleteProduct(product.id);
         });
